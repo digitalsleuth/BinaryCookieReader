@@ -6,31 +6,31 @@ This repo was forked from: https://github.com/as0ler/BinaryCookieReader
 
 Then updated for usage with Python 3
 
-##Usage
+## Usage
 
 `
 binarycookiereader.py <filename>
 `
 
-##Cookies.binarycookies Format
+## Cookies.binarycookies Format
 
 Cookies.binarycookies file is composed of several pages and each page can have one or more cookies. The complete file format is explained below:
 
-###File Format:
+### File Format:
 1. The file starts with a 4 byte magic string: cook. It is used to identify the file type.
 2. Next four bytes is an integer specifying the number of pages in the file.
 3. Following that, a 4 byte integer for each page, represents the page size.
 4. Next to that, the file contains the actual page content. Each page is of length corresponding to the page size. Page format is explained below.
 5. The file ends with an 8 byte value and it might be file checksum.`
 
-###Page Format:
+### Page Format:
 1. Every page starts with a 4 byte page header: 0x00000100.
 2. Next four bytes is an integer specifying the number of cookies in the page.
 3. Following that, a 4 byte integer for each cookie, represents the cookie offset. Offset specifies the start of the cookie in bytes from the start of the page.
 4. Next to that, the page contains the actual cookie contents. Each cookie is of variable length. Cookie format is explained below.
 5. Page ends with a 4 byte value and it is always 0x00000000.
 
-###Cookie Format:
+### Cookie Format:
 1. First 4 bytes in the cookie is the size of the cookie.
 2. The next 4 bytes are unknown (may be related to cookies flags).
 3. The next four bytes are the cookie flags. This is an integer value (1=HTTPS, 4=HTTPOnly).
