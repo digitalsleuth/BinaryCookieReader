@@ -1,6 +1,7 @@
 # BinaryCookieReader
 
 Original author content found here: http://www.securitylearn.net/2012/10/27/cookies-binarycookies-reader/
+
 This repo was forked from: https://github.com/as0ler/BinaryCookieReader
 
 Then updated for usage with Python 3
