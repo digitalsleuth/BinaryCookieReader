@@ -120,7 +120,7 @@ def parse_pages(binary_file):
             print('{:12s} {:48s} {:20s} {:12s} {:12s} {:12s} {}'.format(name, value, url, path, create_date, expiry_date, cookie_flags))
 
 if __name__ == "__main__":
-    arg_parse = ArgumentParser(description="Python3 BinaryCookieParser v"+__version__, epilog= str(__about__), formatter_class=RawTextHelpFormatter)
+    arg_parse = ArgumentParser(description="Python3 BinaryCookieReader v"+__version__, epilog= str(__about__), formatter_class=RawTextHelpFormatter)
     arg_parse.add_argument("input_file", metavar="<input_file>", help="Input file including path")
     arg_parse.add_argument("-v", action="version", version='%(prog)s' +' v' + str(__version__))
     args = arg_parse.parse_args()
