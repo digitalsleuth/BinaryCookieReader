@@ -14,7 +14,9 @@ binarycookiereader.py <filename>
 
 ## Cookies.binarycookies Format
 
-Cookies.binarycookies file is composed of several pages and each page can have one or more cookies. The complete file format is explained below:
+Cookies.binarycookies file is composed of several pages and each page can have one or more cookies.
+
+The complete file format is explained below:
 
 ### File Format:
 1. The file starts with a 4 byte magic string: cook. It is used to identify the file type.
