@@ -28,9 +28,9 @@ __about__ = (
 )
 
 
-def process(binary_file, file_size):
+def process(binary_file, file_size, all_args):
     check_header(binary_file)
-    parse_pages(binary_file, file_size)
+    parse_pages(binary_file, file_size, all_args)
     binary_file.close()
 
 
@@ -46,11 +46,13 @@ def check_header(binary_file):
         pass
 
 
-def parse_pages(binary_file, file_size):
+def parse_pages(binary_file, file_size, all_args):
+    verbose = all_args["verbose"]
+    table = all_args["table"]
     tbl_output = []
     csv_output = []
-    print(f"Filename: {Path(args.input_file).resolve()}\n")
-    if args.verbose:
+    print(f"Filename: {Path(all_args['input_file']).resolve()}\n")
+    if verbose:
         csv_output.append(["Name,Value,Domain and Path,Create Date,Expiry Date,Flags"])
         tbl_output.append(
             ["Name", "Value", "Domain and Path", "Create Date", "Expiry Date", "Flags"]
@@ -157,7 +159,7 @@ def parse_pages(binary_file, file_size):
                 if "%" in value:
                     value = unquote(value)
                 va = cookie.read(1)
-            if args.verbose:
+            if verbose:
                 csv_output.append(
                     [
                         f"{name},{value},{url}{path},{int(create_date_epoch)},{int(expiry_date_epoch)},{cookie_flags}"
@@ -185,24 +187,24 @@ def parse_pages(binary_file, file_size):
                     ]
                 )
     bplist_offset += 12  # 4 bytes for the checksum, 8 bytes for the footer signature
-    if args.bplist and file_size > bplist_offset:
+    if all_args["bplist"] and file_size > bplist_offset:
         binary_file.seek(bplist_offset)
         if binary_file.read(8) == b"bplist00":
             binary_file.seek(bplist_offset)
             bplist = binary_file.read(file_size - bplist_offset)
-            bplist_file = open(f"{args.input_file}.bplist", "wb")
+            bplist_file = open(f"{all_args['input_file']}.bplist", "wb")
             bplist_file.write(bplist)
             bplist_file.close()
-    if args.bplist and file_size <= bplist_offset:
+    if all_args["bplist"] and file_size <= bplist_offset:
         print("--bplist was selected, but there is no bplist at the end of the file")
-    if args.table:
+    if table:
         tbl = PrettyTable(tbl_output[0])
         tbl.set_style(SINGLE_BORDER)
         tbl.align = "l"
         tbl.add_rows(tbl_output[1:])
         sort_by = "Domain and Path"
-        if args.sort:
-            sort_col = (args.sort).lower()
+        if all_args["sort"]:
+            sort_col = (all_args["sort"]).lower()
             if "name" in sort_col:
                 sort_by = "Name"
             elif "value" in sort_col:
@@ -276,11 +278,11 @@ def main():
         version="%(prog)s" + " v" + str(__version__),
     )
     args = arg_parse.parse_args()
-
+    all_args = vars(args)
     try:
-        binary_file = open(args.input_file, "rb")
-        file_size = Path(args.input_file).stat().st_size
-        process(binary_file, file_size)
+        binary_file = open(all_args["input_file"], "rb")
+        file_size = Path(all_args["input_file"]).stat().st_size
+        process(binary_file, file_size, all_args)
     except IOError as e:
         print(f"Unable to read '{args.input_file}': {e}")
         raise SystemExit(1)
