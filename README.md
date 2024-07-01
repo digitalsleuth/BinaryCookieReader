@@ -1,7 +1,8 @@
 # BinaryCookieReader
 
 Original author content found here: http://www.securitylearn.net/2012/10/27/cookies-binarycookies-reader/  
-This repo was originally forked from: https://github.com/as0ler/BinaryCookieReader and updated for usage with Python 3
+  
+This repo was originally forked from: https://github.com/as0ler/BinaryCookieReader and updated for usage with Python 3  
   
 Additional information can also be found at: https://github.com/libyal/dtformats/blob/master/documentation/Safari%20Cookies.asciidoc  
 Table structure and contents sourced from: https://github.com/Lessica/CookiesTool
@@ -27,7 +28,7 @@ optional arguments:
 
 ## File Format
 
-The *.binarycookies file is composed of several pages and each page can have one or more cookies.
+The binarycookies file is composed of several pages and each page can have one or more cookies.
 
 ### File
 
